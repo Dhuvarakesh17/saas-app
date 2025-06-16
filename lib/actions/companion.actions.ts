@@ -52,5 +52,5 @@ export const getCompanion=async (id:string) =>{
         .eq('id',id);
 
     if(error) return console.log(error);
-    return [0];
+    return data[0];
 }
