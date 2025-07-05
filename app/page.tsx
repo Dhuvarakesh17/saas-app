@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from "@/components/ui/button";
+
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
