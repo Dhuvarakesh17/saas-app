@@ -9,7 +9,7 @@ export const nextConfig: NextConfig = {
   }
 };
 
-// @ts-ignore
+// @ts-expect-error - Sentry configuration might have type issues
 export default withSentryConfig(nextConfig, {
 // For all available options, see:
 // https://www.npmjs.com/package/@sentry/webpack-plugin#options

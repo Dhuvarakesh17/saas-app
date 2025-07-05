@@ -1,6 +1,6 @@
 import {createClient} from "@supabase/supabase-js";
+// @ts-expect-error - Import from @clerk/nextjs/server might have type issues
 import {auth} from "@clerk/nextjs/server";
-// @ts-ignore
 
 export const createSupabaseClient=()=>{
     return createClient(

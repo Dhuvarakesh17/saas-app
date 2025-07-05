@@ -5,7 +5,7 @@ import {cn, configureAssistant, getSubjectColor} from "@/lib/utils";
 import {vapi} from "@/lib/vapi.sdk";
 import Image from "next/image";
 import Lottie, {LottieRefCurrentProps} from "lottie-react";
-// @ts-ignore
+// @ts-expect-error - Import JSON file as module
 import soundwaves from '@/constants/soundwaves.json'
 
 
@@ -50,7 +50,7 @@ const CompanionComponent = ({companionId,subject,topic,name,userName,userImage,s
         }
         const onSpeechStart = () => setIsSpeaking(true);
         const onSpeechEnd = () => setIsSpeaking(false);
-        const onError = (error: Error) => console.log('Error', Error);
+        const onError = (error: Error) => console.log('Error', error);
 
         vapi.on('call-start', onCallStart);
         vapi.on('call-end', onCallEnd);
@@ -67,7 +67,7 @@ const CompanionComponent = ({companionId,subject,topic,name,userName,userImage,s
             vapi.off('speech-end', onSpeechEnd);
 
         }
-    }, [])
+    }, [companionId])
     const toggleMicrophone = () => {
         const isMuted = vapi.isMuted();
         vapi.setMuted(!isMuted);
@@ -84,7 +84,7 @@ const CompanionComponent = ({companionId,subject,topic,name,userName,userImage,s
               serverMessages:[],
 
           }
-          //@ts-expect-error
+          //@ts-expect-error - vapi.start expects different parameters than provided
           vapi.start(configureAssistant(voice,style),assistantOverrides)
     }
     const handleDisConnect = () => {

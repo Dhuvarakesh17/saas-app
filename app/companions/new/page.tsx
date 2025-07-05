@@ -1,8 +1,7 @@
 import React from 'react';
 import CompanionForm from "@/components/CompanionForm";
-// @ts-ignore
+// @ts-expe// @ts-expect-error - Import from @clerk/nextjs/server might have type issuesct-error - Import from @clerk/nextjs/server might have type issues
 import {auth} from "@clerk/nextjs/server";
-// @ts-ignore
 
 import {redirect} from "next/navigation";
 
