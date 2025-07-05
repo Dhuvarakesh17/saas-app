@@ -5,7 +5,7 @@ import {cn, configureAssistant, getSubjectColor} from "@/lib/utils";
 import {vapi} from "@/lib/vapi.sdk";
 import Image from "next/image";
 import Lottie, {LottieRefCurrentProps} from "lottie-react";
-// @ts-expect-error - Import JSON file as module
+
 import soundwaves from '@/constants/soundwaves.json'
 
 
