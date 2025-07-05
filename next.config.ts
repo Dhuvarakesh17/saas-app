@@ -6,6 +6,9 @@ export const nextConfig: NextConfig = {
       remotePatterns:[
           {hostname:'img.clerk.com'}
       ]
+  },
+  telemetry: {
+    anonymousId: false
   }
 };
 
