@@ -16,7 +16,7 @@ interface CompanionListProps {
                               companions?:Companion[];
                               classNames?:string;}
 const CompanionsList = ({companions,classNames}:CompanionListProps) => {
-    // @ts-expect-error - Component might have type issues with props
+
     return (
         <article className={cn('companion-list',classNames)}>
             <h2 className="font-bold text-3xl">Recent Sessions</h2>
