@@ -10,9 +10,9 @@ const SearchInput = () => {
     const pathName=usePathname();
     const router=useRouter();
     const searchParams=useSearchParams();
-    const query=searchParams.get('query');
+    const topic=searchParams.get('topic');
 
-    const [searchQuery,setSearchQuery]=React.useState(query);
+    const [searchQuery,setSearchQuery]=React.useState(topic);
 
     useEffect(()=>{
         const delayDebounceFn=setTimeout(()=>{
@@ -43,7 +43,7 @@ const SearchInput = () => {
             <Image src="/icons/search.svg" alt="search" width={15} height={15}/>
             <input placeholder="Search Companions ..."
                    className="outline-none"
-                   value={searchQuery}
+                   value={searchQuery || ''}
                    onChange={(e)=>setSearchQuery(e.target.value)} />
 
         </div>
