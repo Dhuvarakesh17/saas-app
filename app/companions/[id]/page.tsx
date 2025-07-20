@@ -1,54 +1,39 @@
-import React from 'react';
-import {getCompanion} from "@/lib/actions/companion.actions";
-import {currentUser} from "@clerk/nextjs/server";
+import CompanionForm from "@/components/CompanionForm";
+import {auth} from "@clerk/nextjs/server";
 import {redirect} from "next/navigation";
-import {getSubjectColor} from "@/lib/utils";
+import {newCompanionPermissions} from "@/lib/actions/companion.actions";
 import Image from "next/image";
-import CompanionComponent from "@/components/CompanionComponent";
-interface CompanionSessionPageProps{
-    params  :Promise<{id:string}>;
-}
-const CompanionSession = async (  {params}:CompanionSessionPageProps) => {
-    const {id}=await params;
-    const companion=await getCompanion(id);
-    const user =await currentUser();
+import Link from "next/link";
 
-    const { name,subject,topic,duration}=companion;
-    if(!user){
-        redirect('/sign-in')
-    }
-    if(!name){
-        redirect('/companions')
-    }
+const NewCompanion = async () => {
+    const { userId } = await auth();
+    if(!userId) redirect('/sign-in');
 
+    const canCreateCompanion = await newCompanionPermissions();
 
     return (
-        <main>
-            <article className="flex rounded-border justify-between p-6 max-md:flex-col">
-                <div className="flex items-center gap-2">
-                    <div className=" size-[72px] flex items-center justify-center rounded-lg max-md:hidden" style={{backgroundColor:getSubjectColor(subject)}}>
-                        <Image src={`/icons/${subject}.svg`} alt={subject} width={35} height={35}/>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2">
-                            <p className="font-bold text-2xl">{name}</p>
-                            <div className="subject-badge max-sm:hidden">{subject}</div>
-                        </div>
-                        <p className="text-lg">{topic}</p>
-                    </div>
-                </div>
-                <div className="items-start text-2xl max-md:hidden">
-                    {duration} minutes
-                </div>
-            </article>
-            <CompanionComponent
-                {...companion}
-                companionId={id}
-                userName={user.firstName!}
-                userImage={user.imageUrl!}
-            />
-        </main>
-    );
-};
+        <main className="min-lg:w-1/3 min-md:w-2/3 items-center justify-center">
+            {canCreateCompanion ? (
+                <article className="w-full gap-4 flex flex-col">
+                    <h1>Companion Builder</h1>
 
-export default CompanionSession;
+                    <CompanionForm />
+                </article>
+            ) : (
+                <article className="companion-limit">
+                    <Image src="/images/limit.svg" alt="Companion limit reached" width={360} height={230} />
+                    <div className="cta-badge">
+                        Upgrade your plan
+                    </div>
+                    <h1>You’ve Reached Your Limit</h1>
+                    <p>You’ve reached your companion limit. Upgrade to create more companions and premium features.</p>
+                    <Link href="/subscription" className="btn-primary w-full justify-center" >
+                        Upgrade My Plan
+                    </Link>
+                </article>
+            )}
+        </main>
+    )
+}
+
+export default NewCompanion
